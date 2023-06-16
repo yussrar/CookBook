@@ -1,0 +1,11 @@
+﻿@model CookBook.Models.IngredientsDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this ingredient</h2>
+
+<form action="/ingredients/Delete/@Model.IngredientID" method="post">
+    <input type="submit" value="Confirm Delete" />
+</form>
+

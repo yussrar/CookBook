@@ -1,0 +1,27 @@
+﻿@model CookBook.Models.IngredientsDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+<a href="/Ingredients/List">Go Back To Home</a>
+<div class="form-container">
+    <form action="/Ingredients/Update/@Model.IngredientID" method="post" enctype="multipart/form-data">
+
+        <div>
+            <label> ID: </label> <input type="text" name="IngredientId" value="@Model.IngredientID" />
+        </div>
+
+        <div>
+            <label> Ingredient </label> <input type="text" name="IngName" value="@Model.IngName" />
+        </div>
+
+        <div>
+            <input type="submit" value="Update Ingredient" />
+        </div>
+    </form>
+
+</div>
+

@@ -1,0 +1,22 @@
+﻿@model CookBook.Models.RecipeDto
+
+@Styles.Render("~/Content/Site.css")
+@{
+    ViewBag.Title = "View";
+}
+
+
+<a href="/Recipe/List">Go Back To Home</a>
+<br />
+<a href="/Recipe/Edit/@Model.RecipeId">Update</a>
+<br />
+<a href="/Recipe/DeleteConfirm/@Model.RecipeId">Delete</a>
+<br />
+
+
+<div class="details">
+    <h2>@Model.RecipeTitle</h2>
+    <p> Instructions: @Model.Instructions</p>
+    <p> Serves: @Model.ServingSize</p>
+    <p> Cook Time: @Model.CookTime Hour</p>
+</div>

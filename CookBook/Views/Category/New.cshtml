@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<CookBook.Models.CategoryDto>
+@{
+    ViewBag.Title = "Create";
+}
+
+<a href="/category/List">Go Back To Home</a>
+
+
+
+<h2>Add Category</h2>
+<div class="form-container">
+    <form action="/category/Create" method="POST">
+        <div>
+            <label> Category : </label> <input type="text" name="CategoryName" />
+        </div>
+
+        <div>
+            <input type="submit" value="Add Category" />
+        </div>
+
+    </form>
+</div>
+

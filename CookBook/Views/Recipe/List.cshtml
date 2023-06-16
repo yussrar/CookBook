@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CookBook.Models.Recipe>
+@Styles.Render("~/Content/Site.css")
+
+@{
+    ViewBag.Title = "List";
+}
+
+
+<h2>All Recipes</h2>
+
+
+<a href="/Recipe/New">Add New Recipe</a>
+
+    @foreach (var recipe in Model)
+    {   
+        <div class="list">
+            <h2>  @recipe.RecipeTitle</h2>
+            <p> Cook Time: @recipe.CookTime hour</p>
+            <p> Serves: @recipe.ServingSize</p>
+            <button>
+                <a href="/Recipe/Details/@recipe.RecipeId">View Recipe</a>
+            </button>
+        </div>
+    }
+
+
+

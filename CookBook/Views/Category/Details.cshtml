@@ -1,0 +1,19 @@
+﻿@model CookBook.Models.CategoryDto
+@{
+    ViewBag.Title = "View";
+}
+
+
+    <a href="/Category/List">Go Back To Home</a>
+    <br />
+    <a href="/Category/Edit/@Model.CategoryID">Update</a>
+    <br />
+    <a href="/Category/DeleteConfirm/@Model.CategoryID">Delete</a>
+    <br />
+
+
+
+    <div class="details">
+        <p> Category ID : @Model.CategoryID</p>
+        <p> Category Name: @Model.CategoryName</p>
+    </div>

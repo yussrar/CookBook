@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<CookBook.Models.IngredientsDto>
+@{
+    ViewBag.Title = "Create";
+}
+
+<a href="/ingredients/List">Go Back To Home</a>
+
+
+
+<h2>Add Ingredient</h2>
+<div class="form-container">
+    <form action="/ingredients/Create" method="POST">
+        <div>
+            <label> Ingredient : </label> <input type="text" name="IngName" />
+        </div>
+
+        <div>
+            <input type="submit" value="Add ingredient" />
+        </div>
+    </form>
+</div>
+
+

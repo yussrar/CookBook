@@ -1,0 +1,18 @@
+﻿@model IEnumerable<CookBook.Models.Category>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+
+<a href="/Category/New">Add New Category</a>
+
+@foreach (var category in Model)
+{
+    <ul>
+        <li>
+            <a href="/category/details/@category.CategoryID"> @category.CategoryName </a>
+        </li>
+    </ul>
+}

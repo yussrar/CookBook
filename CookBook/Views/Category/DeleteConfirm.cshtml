@@ -1,0 +1,10 @@
+﻿@model CookBook.Models.CategoryDto
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Are you sure you want to delete this Category</h2>
+
+<form action="/category/Delete/@Model.CategoryID" method="post">
+    <input type="submit" value="Confirm Delete" />
+</form>

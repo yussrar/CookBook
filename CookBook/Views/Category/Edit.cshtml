@@ -1,0 +1,27 @@
+﻿@model CookBook.Models.CategoryDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+<a href="/Category/List">Go Back To Home</a>
+
+<div class="form-container">
+    <form action="/Category/Update/@Model.CategoryID" method="post" enctype="multipart/form-data">
+
+        <div>
+            <label> ID: </label> <input type="text" name="CategoryID" value="@Model.CategoryID" />
+        </div>
+
+        <div>
+            <label> Category:  </label> <input type="text" name="CategoryName" value="@Model.CategoryName" />
+        </div>
+
+        <div>
+            <input type="submit" value="Update Category" />
+        </div>
+    </form>
+</div>
+

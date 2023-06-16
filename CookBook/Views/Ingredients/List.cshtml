@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CookBook.Models.Ingredients>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2> All Ingredients</h2>
+
+
+<a href="/Ingredients/New">Add New Ingredient</a>
+
+<div class="list">
+    @foreach (var ingredient in Model)
+    {
+        <ul>
+            <li>
+                <a href="/ingredients/details/@ingredient.IngredientID"> @ingredient.IngName </a>
+            </li>
+        </ul>
+    }
+</div>

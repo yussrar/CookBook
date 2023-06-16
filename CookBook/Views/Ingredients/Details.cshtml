@@ -1,0 +1,19 @@
+﻿@model CookBook.Models.IngredientsDto
+@{
+    ViewBag.Title = "View";
+}
+
+
+    <a href="/Ingredients/List">Go Back To Home</a>
+    <br />
+    <a href="/Ingredients/Edit/@Model.IngredientID">Update</a>
+    <br />
+    <a href="/ingredients/DeleteConfirm/@Model.IngredientID">Delete</a>
+    <br />
+
+
+    <div class="details">
+        <p>Ingredient ID: @Model.IngredientID</p>
+        <p>Ingredient Name: @Model.IngName</p>
+
+    </div>
