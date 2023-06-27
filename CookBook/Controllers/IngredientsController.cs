@@ -1,4 +1,5 @@
 ﻿using CookBook.Models;
+using CookBook.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,14 +19,14 @@ namespace CookBook.Controllers
         static IngredientsController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44373/api/ingredientsdata/");
+            client.BaseAddress = new Uri("https://localhost:44373/api/");
         }
         // GET: Ingredients/List
         public ActionResult List()
         {
             //communicate with ingredients data api to retrieve a  list of ingredients
 
-            string url = "listingredients";
+            string url = "ingredientsdata/listingredients";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<Ingredients> ingredients = response.Content.ReadAsAsync<IEnumerable<Ingredients>>().Result;
@@ -39,14 +40,24 @@ namespace CookBook.Controllers
         public ActionResult Details(int id)
 
         {
+            DetailsIngredients ViewModel  = new DetailsIngredients();
             //objective: communicate with ingredients data api to retrieve a one ingredient
 
-            string url = "findingredient/" + id;
+            string url = "ingredientsdata/findingredient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IngredientsDto ingredient = response.Content.ReadAsAsync<IngredientsDto>().Result;
+            ViewModel.Ingredients = ingredient;
 
-            return View(ingredient);
+            //show all Recipes for this ingredient
+            url = "recipesdata/listrecipesforingredient/" + id;
+            response = client.GetAsync(url).Result;
+
+            IEnumerable<RecipeDto> InRecipes = response.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
+
+            ViewModel.InRecipes = InRecipes;
+
+            return View(ViewModel);
         }
 
         public ActionResult Error()
@@ -67,7 +78,7 @@ namespace CookBook.Controllers
 
             //objective: add a new Recipe into our system using API
 
-            string url = "addingredient";
+            string url = "ingredientsdata/addingredient";
 
             //converting ingredient object to json object using serializer
 
@@ -96,7 +107,7 @@ namespace CookBook.Controllers
         // GET: ingredients/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "findingredient/" + id;
+            string url = "ingredientsdata/findingredient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IngredientsDto selectedingredient = response.Content.ReadAsAsync<IngredientsDto>().Result;
@@ -109,7 +120,7 @@ namespace CookBook.Controllers
         {
             //objective: Edit an existing ingredient in our system
 
-            string url = "UpdateIngredient/" + id;
+            string url = "ingredientsdata/UpdateIngredient/" + id;
 
             //converting recipe object to json objectusing serializer
             string jsonpayload = jss.Serialize(ingredient);
@@ -137,7 +148,7 @@ namespace CookBook.Controllers
         // GET: ingredients/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindIngredient/" + id;
+            string url = "ingredientsdata/FindIngredient/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IngredientsDto selecteding = response.Content.ReadAsAsync<IngredientsDto>().Result;
@@ -150,7 +161,7 @@ namespace CookBook.Controllers
         {
             //objective: Deleting an existing ingredient in our system
 
-            string url = "deleteingredient/" + id;
+            string url = "ingredientsdata/deleteingredient/" + id;
 
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

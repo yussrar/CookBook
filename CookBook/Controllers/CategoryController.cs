@@ -18,14 +18,14 @@ namespace CookBook.Controllers
         static CategoryController()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://localhost:44373/api/CategoryData/");
+            client.BaseAddress = new Uri("https://localhost:44373/api/");
         }
         // GET: Category/List
         public ActionResult List()
         {
             //communicate with category data api to retrieve a  list of categories
 
-            string url = "listcategories";
+            string url = "CategoryData/listcategories";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             IEnumerable<Category> categories = response.Content.ReadAsAsync<IEnumerable<Category>>().Result;
@@ -41,7 +41,7 @@ namespace CookBook.Controllers
         {
             //objective: communicate with Category data api to retrieve a one category
 
-            string url = "findCategory/" + id;
+            string url = "CategoryData/findCategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoryDto category = response.Content.ReadAsAsync<CategoryDto>().Result;
@@ -67,7 +67,7 @@ namespace CookBook.Controllers
 
             //objective: add a new category into our system using API
 
-            string url = "addcategory";
+            string url = "CategoryData/addcategory";
 
             //converting ingredient object to json object using serializer
 
@@ -96,7 +96,7 @@ namespace CookBook.Controllers
         // GET: category/Edit/5
         public ActionResult Edit(int id)
         {
-            string url = "findcategory/" + id;
+            string url = "CategoryData/findcategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoryDto selectedcategory = response.Content.ReadAsAsync<CategoryDto>().Result;
@@ -109,7 +109,7 @@ namespace CookBook.Controllers
         {
             //objective: Edit an existing category in our system
 
-            string url = "UpdateCategory/" + id;
+            string url = "CategoryData/UpdateCategory/" + id;
 
             //converting category object to json objectusing serializer
             string jsonpayload = jss.Serialize(category);
@@ -137,7 +137,7 @@ namespace CookBook.Controllers
         // GET: category/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindCategory/" + id;
+            string url = "CategoryData/FindCategory/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             CategoryDto selectedCat = response.Content.ReadAsAsync<CategoryDto>().Result;
@@ -150,7 +150,7 @@ namespace CookBook.Controllers
         {
             //objective: Deleting an existing category in our system
 
-            string url = "deletecategory/" + id;
+            string url = "CategoryData/deletecategory/" + id;
 
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

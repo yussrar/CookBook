@@ -77,23 +77,98 @@ namespace CookBook.Controllers
 
 
         /// <summary>
-        /// Updates a particular ingredient in the system with POST Data input
+        /// Gathers information about all ingredients Related to a particular recipe
         /// </summary>
-        /// <param name="id">Represents the Ingredient ID primary key</param>
-        /// <param name="ingredient">JSON FORM DATA of an Inggredient</param>
+        /// <param name="id">recipe ID</param>
         /// <returns>
-        /// HEADER: 204 (Success, No Content Response)
+        /// HEADER: 200 (Success, No Content Response)
         /// or
         /// HEADER: 400 (Bad Request)
         /// or
         /// HEADER: 404 (Not Found)
+        /// CONTENT: all ingredients in the database, associated with the recipe
         /// </returns>
         /// <example>
-        /// POST: api/IngredientData/UpdateIngredient/5
-        /// FORM DATA: Ingredient JSON Object
+        /// POST: api/IngredientsData/ListIngredientsforRecipe/1
+        ///
         /// </example>
+        /// 
+        [HttpGet]
+        [ResponseType(typeof(IngredientsDto))]
 
-        [ResponseType(typeof(void))]
+        public IHttpActionResult ListIngredientsforRecipe(int id)
+        {
+            //all recipes that have ingredients which match with our id
+            List<Ingredients> ingredients = db.Ingredients.Where(i => i.Recipes.Any(
+                r => r.RecipeId == id
+                )).ToList();
+            List<IngredientsDto> IngredientsDtos = new List<IngredientsDto>();
+
+            ingredients.ForEach(i => IngredientsDtos.Add(new IngredientsDto()
+            {
+                IngredientID=i.IngredientID,
+                IngName = i.IngName
+            })) ;
+
+            return Ok(IngredientsDtos);
+        }
+
+        /// <summary>
+        /// Gathers all ingredients not used in a particular recipe
+        /// </summary>
+        /// <param name="id">recipe ID</param>
+        /// <returns>
+        /// HEADER: 200 (Success, No Content Response)
+        /// or
+        /// HEADER: 400 (Bad Request)
+        /// or
+        /// HEADER: 404 (Not Found)
+        /// CONTENT: all ingredients in the database, not added in the recipe
+        /// </returns>
+        /// <example>
+        /// POST: api/IngredientsData/ListIngredientsNotAddedinRecipe/1
+        ///
+        /// </example>
+        /// 
+        [HttpGet]
+        [ResponseType(typeof(IngredientsDto))]
+
+        public IHttpActionResult ListIngredientsNotAddedinRecipe(int id)
+        {
+            //all recipes that have ingredients which match with our id
+            List<Ingredients> ingredients = db.Ingredients.Where(i => !i.Recipes.Any(
+                r => r.RecipeId == id
+                )).ToList();
+            List<IngredientsDto> IngredientsDtos = new List<IngredientsDto>();
+
+            ingredients.ForEach(i => IngredientsDtos.Add(new IngredientsDto()
+            {
+                IngredientID = i.IngredientID,
+                IngName = i.IngName
+            }));
+
+            return Ok(IngredientsDtos);
+        }
+
+
+            /// <summary>
+            /// Updates a particular ingredient in the system with POST Data input
+            /// </summary>
+            /// <param name="id">Represents the Ingredient ID primary key</param>
+            /// <param name="ingredient">JSON FORM DATA of an Inggredient</param>
+            /// <returns>
+            /// HEADER: 204 (Success, No Content Response)
+            /// or
+            /// HEADER: 400 (Bad Request)
+            /// or
+            /// HEADER: 404 (Not Found)
+            /// </returns>
+            /// <example>
+            /// POST: api/IngredientData/UpdateIngredient/5
+            /// FORM DATA: Ingredient JSON Object
+            /// </example>
+
+            [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateIngredient(int id, Ingredients ingredient)
         {

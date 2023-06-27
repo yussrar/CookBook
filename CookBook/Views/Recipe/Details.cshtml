@@ -1,4 +1,4 @@
-﻿@model CookBook.Models.RecipeDto
+﻿@model CookBook.Models.ViewModels.DetailsRecipes
 
 @Styles.Render("~/Content/Site.css")
 @{
@@ -8,15 +8,37 @@
 
 <a href="/Recipe/List">Go Back To Home</a>
 <br />
-<a href="/Recipe/Edit/@Model.RecipeId">Update</a>
+<a href="/Recipe/Edit/@Model.Recipe.RecipeId">Update</a>
 <br />
-<a href="/Recipe/DeleteConfirm/@Model.RecipeId">Delete</a>
+<a href="/Recipe/DeleteConfirm/@Model.Recipe.RecipeId">Delete</a>
 <br />
 
 
 <div class="details">
-    <h2>@Model.RecipeTitle</h2>
-    <p> Instructions: @Model.Instructions</p>
-    <p> Serves: @Model.ServingSize</p>
-    <p> Cook Time: @Model.CookTime Hour</p>
+    <h2>@Model.Recipe.RecipeTitle</h2>
+    <p> Instructions: @Model.Recipe.Instructions</p>
+    <p> Serves: @Model.Recipe.ServingSize</p>
+    <p> Cook Time: @Model.Recipe.CookTime Hour</p>
+
+    <h4>
+        Ingredients: 
+    </h4>
+    @foreach (var ingredients in @Model.IngredientsUsed)
+            {
+                <a href="/ingredients/details/@ingredients.IngredientID">@ingredients.IngName</a>
+                    <a href="/Recipe/UnAssociate/@Model.Recipe.RecipeId?IngredientID=@ingredients.IngredientID">[X]</a> <br />
+                }
+
+    <div>
+        <h4>Add new Ingredient</h4>
+        <form method="post" action="/Recipe/Associate/@Model.Recipe.RecipeId">
+            <select name="ingredientID">
+                @foreach (var ingredients in @Model.NotAddedIngredients)
+                {
+                    <option value="@ingredients.IngredientID">@ingredients.IngName</option>
+                }
+            </select>
+            <input type="submit" value="Add Ingredient" />
+        </form>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-﻿@model CookBook.Models.IngredientsDto
+﻿@model CookBook.Models.ViewModels.DetailsIngredients
 @{
     ViewBag.Title = "View";
 }
@@ -6,14 +6,21 @@
 
     <a href="/Ingredients/List">Go Back To Home</a>
     <br />
-    <a href="/Ingredients/Edit/@Model.IngredientID">Update</a>
+    <a href="/Ingredients/Edit/@Model.Ingredients.IngredientID">Update</a>
     <br />
-    <a href="/ingredients/DeleteConfirm/@Model.IngredientID">Delete</a>
+    <a href="/ingredients/DeleteConfirm/@Model.Ingredients.IngredientID">Delete</a>
     <br />
 
 
     <div class="details">
-        <p>Ingredient ID: @Model.IngredientID</p>
-        <p>Ingredient Name: @Model.IngName</p>
-
+        <p>Ingredient ID: @Model.Ingredients.IngredientID</p>
+        <p>Ingredient Name: @Model.Ingredients.IngName</p>
+        <div>
+            <p> <strong>Used in</strong> </p>
+            @foreach (var recipe in Model.InRecipes)
+            {
+                <a href="/Recipe/Details/@recipe.RecipeId">@recipe.RecipeTitle</a><br/>
+            }
+        </div>
     </div>
+
